@@ -1,4 +1,5 @@
 const MORSE_TABLE = {
+    ' ':      ' ',
     '.-':     'a',
     '-...':   'b',
     '-.-.':   'c',
@@ -37,9 +38,35 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
+const decoded = {
+    '11': '-',
+    '10': '.',
+    '**': ' ',
+    '0': ''
+  };
+
 function decode(expr) {
-    // write your solution here
-}
+    let divide = '';
+    let result = '';
+    let strLeng = expr.split('');
+    strLeng.map((el, idx) => {
+      if (idx % 10 === 0 && idx !== 0) {
+        divide += ',';
+      }
+      divide += el;
+    });
+    let resArr = divide.replace(/11/g, '-').replace(/10/g, '.').replace(/\*\*\*\*\*\*\*\*\*\*/g, ' ').replace(/0/g, '').split(',');
+    for (i = 0; i < resArr.length; i++) {
+      for (let key in MORSE_TABLE) {
+        if (resArr[i] === key) {
+          result += MORSE_TABLE[key];
+        }
+      }
+    }
+    return result;
+};
+
+
 
 module.exports = {
     decode
